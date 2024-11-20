@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -7,8 +7,14 @@ function JobForm() {
   const [role, setRole] = useState("");
   const [scroll, setScroll] = useState(10);
   const [status, setStatus] = useState("");
-  const [jobId, setJobId] = useState(null);
   const navigate = useNavigate();
+
+  const [savedJobs, setSavedJobs] = useState([]);
+
+  useEffect(() => {
+    const storedJobs = JSON.parse(localStorage.getItem("jobDetails")) || [];
+    setSavedJobs(storedJobs);
+  }, []);
 
   const handleScrapeJob = async () => {
     try {
@@ -17,18 +23,24 @@ function JobForm() {
       });
 
       const newJobId = response.data.job_id;
-      setJobId(newJobId);
       setStatus("Job started. Waiting for completion...");
 
-      const savedJobs = JSON.parse(localStorage.getItem("jobs")) || [];
-      savedJobs.push({ jobId: newJobId, status: "pending" });
-      localStorage.setItem("jobs", JSON.stringify(savedJobs));
-
-      navigate(`/results/${newJobId}`); 
+      navigate(`/results/${newJobId}`);
     } catch (error) {
       console.error("Error starting the scraping job:", error);
       setStatus("Error starting the scraping job.");
     }
+
+    const newJobDetail = { location, role, scroll };
+    const updatedJobs = [newJobDetail, ...savedJobs];
+    localStorage.setItem("jobDetails", JSON.stringify(updatedJobs));
+    setSavedJobs(updatedJobs);
+  };
+
+  const handleClickSavedJob = (jobDetail) => {
+    setLocation(jobDetail.location);
+    setRole(jobDetail.role);
+    setScroll(jobDetail.scroll);
   };
 
   return (
@@ -75,6 +87,23 @@ function JobForm() {
         </button>
 
         {status && <p className="text-center mt-4">{status}</p>}
+
+        {savedJobs.length > 0 && (
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold">Saved Job Details</h3>
+            <ul className="space-y-2">
+              {savedJobs.map((jobDetail, index) => (
+                <li
+                  key={index}
+                  className="cursor-pointer text-indigo-600 hover:text-indigo-800"
+                  onClick={() => handleClickSavedJob(jobDetail)}
+                >
+                  {jobDetail.location} - {jobDetail.role} - {jobDetail.scroll} scrolls
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

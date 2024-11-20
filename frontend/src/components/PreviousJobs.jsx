@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, formatDistance } from "date-fns";
 
 function PreviousJobs() {
   const [jobsList, setJobsList] = useState([]);
@@ -56,8 +56,9 @@ function PreviousJobs() {
           >
             <h3 className="text-lg font-semibold">Job ID: {job.job_id}</h3>
             <p className="text-sm text-gray-600">Status: {job.status}</p>
-            <p className="text-sm text-gray-600">Created At: {formatDistanceToNow(new Date(job.created_at), { addSuffix: true })}</p>
-            <p className="text-sm text-gray-600">Completed At: {job.completed_at ? formatDistanceToNow(new Date(job.completed_at), { addSuffix: true }) : "N/A"}</p>
+            <p className="text-sm text-gray-600">Created At: {job.created_at ? new Date(job.created_at).toLocaleString() : "N/A"}</p>
+            <p className="text-sm text-gray-600">Completed At: {job.completed_at ? new Date(job.completed_at).toLocaleString(): "N/A"}</p>
+            <p className="text-sm text-gray-600">Took: {job.completed_at && job.created_at ? formatDistance(new Date(job.created_at), new Date(job.completed_at)) : "N/A"}</p>
           </div>
         ))}
       </div>

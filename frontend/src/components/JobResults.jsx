@@ -17,7 +17,7 @@ function JobResults() {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/job/${jobId}`);
         setJobData(response.data.job_data);
         setJobDetails(response.data);
-        setStatus("Job data loaded.");
+        setStatus("Pending job data...");
         if (response.data.status === "pending") {
           startPolling();
         }
