@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { formatDistanceToNow, formatDistance } from "date-fns";
+import { formatDistance } from "date-fns";
 
 function PreviousJobs() {
   const [jobsList, setJobsList] = useState([]);
@@ -29,8 +29,8 @@ function PreviousJobs() {
   if (loading) {
     return (
       <div className="mt-8">
-        <h2 className="text-xl font-semibold">Previous Jobs:</h2>
-        <p className="text-gray-600">Loading...</p>
+        <h2 className="text-2xl font-bold">Previous Jobs:</h2>
+        <p className="text-gray-300">Loading...</p>
       </div>
     );
   }
@@ -38,27 +38,27 @@ function PreviousJobs() {
   if (noJobs) {
     return (
       <div className="mt-8">
-        <h2 className="text-xl font-semibold">Previous Jobs:</h2>
-        <p className="text-gray-600">No jobs available.</p>
+        <h2 className="text-2xl font-bold">Previous Jobs:</h2>
+        <p className="text-gray-300">No jobs available.</p>
       </div>
     );
   }
 
   return (
     <div className="mt-8">
-      <h2 className="text-xl font-semibold">Previous Jobs:</h2>
-      <div className="space-y-4 mt-4">
+      <h2 className="text-2xl font-bold">Previous Jobs:</h2>
+      <div className="space-y-6 mt-4">
         {jobsList.map((job, index) => (
           <div
             key={index}
-            className="border p-4 rounded-lg shadow-md cursor-pointer"
+            className="border border-gray-700 p-6 cursor-pointer hover:bg-gray-700"
             onClick={() => handleSelectJob(job.job_id)}
           >
-            <h3 className="text-lg font-semibold">Job ID: {job.job_id}</h3>
-            <p className="text-sm text-gray-600">Status: {job.status}</p>
-            <p className="text-sm text-gray-600">Created At: {job.created_at ? new Date(job.created_at).toLocaleString() : "N/A"}</p>
-            <p className="text-sm text-gray-600">Completed At: {job.completed_at ? new Date(job.completed_at).toLocaleString(): "N/A"}</p>
-            <p className="text-sm text-gray-600">Took: {job.completed_at && job.created_at ? formatDistance(new Date(job.created_at), new Date(job.completed_at)) : "N/A"}</p>
+            <h3 className="text-xl font-semibold text-green-400">Job ID: {job.job_id}</h3>
+            <p className="text-sm text-gray-400">Status: {job.status}</p>
+            <p className="text-sm text-gray-400">Created At: {job.created_at ? new Date(job.created_at).toLocaleString() : "N/A"}</p>
+            <p className="text-sm text-gray-400">Completed At: {job.completed_at ? new Date(job.completed_at).toLocaleString(): "N/A"}</p>
+            <p className="text-sm text-gray-400">Took: {job.completed_at && job.created_at ? formatDistance(new Date(job.created_at), new Date(job.completed_at)) : "N/A"}</p>
           </div>
         ))}
       </div>

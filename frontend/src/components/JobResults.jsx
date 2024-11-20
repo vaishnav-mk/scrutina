@@ -63,37 +63,41 @@ function JobResults() {
 
   return (
     <div className="mt-8">
-      <h2 className="text-xl font-semibold">Job Results for {jobId}</h2>
+      <h2 className="text-2xl font-bold text-white">Job Results for {jobId}</h2>
       <div className="space-y-4 mt-4">
-        <p className="text-sm text-gray-600">Created At: {new Date(jobDetails.created_at).toLocaleString()}</p>
-        <p className="text-sm text-gray-600">Location: {jobDetails.details.location}</p>
-        <p className="text-sm text-gray-600">Role: {jobDetails.details.role}</p>
-        <p className="text-sm text-gray-600">Scroll: {jobDetails.details.scroll}</p>
-        <p className="text-sm text-gray-600">Completed At: {jobDetails.completed_at ? new Date(jobDetails.completed_at).toLocaleString() : 'N/A'}</p>
+        <div className="block p-4 bg-gray-900 text-gray-300">
+          <p className="text-sm">Created At: {new Date(jobDetails.created_at).toLocaleString()}</p>
+          <p className="text-sm">Location: {jobDetails.details.location}</p>
+          <p className="text-sm">Role: {jobDetails.details.role}</p>
+          <p className="text-sm">Scroll: {jobDetails.details.scroll}</p>
+          <p className="text-sm">Completed At: {jobDetails.completed_at ? new Date(jobDetails.completed_at).toLocaleString() : 'N/A'}</p>
+        </div>
 
         {jobDetails.status !== "completed" && (
           <>
-            <p className="text-sm text-gray-600">Last Polled: {lastPolled}</p>
-            <p className="text-sm text-gray-600">Polling Status: {pollingStatus}</p>
+            <div className="block p-4 bg-gray-800 text-gray-300">
+              <p className="text-sm">Last Polled: {lastPolled}</p>
+              <p className="text-sm">Polling Status: {pollingStatus}</p>
+            </div>
           </>
         )}
 
         {jobData.map((company, index) => (
-          <div key={index} className="border p-4 rounded-lg shadow-md">
-            <h3 className="text-lg font-semibold">{company.companyName}</h3>
-            <p className="text-sm text-gray-500">{company.companyTagline}</p>
-            <p className="text-sm text-gray-500">Employees: {company.employeeCount}</p>
+          <div key={index} className="block p-6 border-t-4 border-gray-500 bg-gray-800">
+            <h3 className="text-xl font-bold text-white">{company.companyName}</h3>
+            <p className="text-sm text-gray-400">{company.companyTagline}</p>
+            <p className="text-sm text-gray-400">Employees: {company.employeeCount}</p>
             {company.availableJobs.map((job, jobIndex) => (
               <div key={jobIndex} className="mt-4">
-                <h4 className="font-semibold">{job.jobName}</h4>
-                <p className="text-sm text-gray-600">Compensation: {job.compensation}</p>
-                <p className="text-sm text-gray-600">Locations: {job.locations.join(", ")}</p>
-                <p className="text-sm text-gray-600">Posted: {job.posted}</p>
+                <h4 className="text-lg font-bold text-white">{job.jobName}</h4>
+                <p className="text-sm text-gray-400">Compensation: {job.compensation}</p>
+                <p className="text-sm text-gray-400">Locations: {job.locations.join(", ")}</p>
+                <p className="text-sm text-gray-400">Posted: {job.posted}</p>
                 <a
                   href={`https://www.wellfound.com${job.link}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-indigo-600 hover:text-indigo-700 mt-4 inline-block"
+                  className="text-indigo-400 hover:text-indigo-500 mt-4 inline-block"
                 >
                   View Job
                 </a>
