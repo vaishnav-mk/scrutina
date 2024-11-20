@@ -380,6 +380,54 @@
         "scroll": 1
       },
       "completed_at": "2024-11-20T17:02:20.683020"
+    },
+    "5b76292b-f712-4f38-9cef-6b1588a33e15": {
+      "status": "completed",
+      "job_data": [
+        {
+          "companyName": "Twenty20Systems",
+          "companyTagline": "A platform of Integration solutions and enterprise automation systems",
+          "employeeCount": "11-50 Employees",
+          "availableJobs": [
+            {
+              "jobName": "Workato Developer",
+              "link": "/jobs/3148421-workato-developer",
+              "compensation": "No equity$120k \u2013 $170k Wellfound Est.",
+              "locations": [
+                "New Jersey",
+                "Bengaluru",
+                "In office"
+              ],
+              "posted": "Posted 1 week ago"
+            }
+          ]
+        },
+        {
+          "companyName": "Pibit.ai",
+          "companyTagline": "Transforming Commercial P&C Industry with LLM-Powered Document AI",
+          "employeeCount": "11-50 Employees",
+          "availableJobs": [
+            {
+              "jobName": "AI Engineer",
+              "link": "/jobs/3121926-ai-engineer",
+              "compensation": "\u20b914L \u2013 \u20b916L",
+              "locations": [
+                "Palo Alto",
+                "HSR Layout",
+                "In office"
+              ],
+              "posted": "Posted 1 month ago"
+            }
+          ]
+        }
+      ],
+      "created_at": "2024-11-20T17:21:07.574907",
+      "details": {
+        "location": "india",
+        "role": "software engineer",
+        "scroll": 1
+      },
+      "completed_at": "2024-11-20T17:21:21.978743"
     }
   }
 }

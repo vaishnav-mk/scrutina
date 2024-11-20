@@ -84,6 +84,9 @@ While this approach was successful, it could be improved further by implementing
 ![image](https://github.com/user-attachments/assets/04ad0856-25fe-47a1-a1ea-13cdd4199b98)
 ![image](https://github.com/user-attachments/assets/cbbff2f8-e1f5-4245-a976-2e2c1c136883)
 
+
+[Watch the video](https://www.youtube.com/watch?v=GhqpOgBVedw)
+
 ## Future Enhancements
 
 - Implement Redis caching for faster data retrieval.  
