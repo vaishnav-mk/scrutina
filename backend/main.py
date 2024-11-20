@@ -226,6 +226,27 @@ async def get_job(job_id: str):
 
     return JSONResponse(content=job_data["jobs"][job_id])
 
+@app.get("/jobs")
+async def get_jobs():
+    if not os.path.exists(JOB_DATA_FILE):
+        return JSONResponse(content={"error": "No job data found."}, status_code=404)
+
+    with open(JOB_DATA_FILE, 'r') as f:
+        job_data = json.load(f)
+
+    job_info = [
+        {
+            "job_id": job_id,
+            "status": job["status"],
+            "created_at": job["created_at"],
+            "completed_at": job["completed_at"]
+        }
+        for job_id, job in job_data["jobs"].items()
+    ]
+
+    return JSONResponse(content={"jobs": job_info})
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
