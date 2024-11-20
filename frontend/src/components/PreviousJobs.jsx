@@ -15,7 +15,11 @@ function PreviousJobs() {
         if (data.jobs.length === 0) {
           setNoJobs(true);
         } else {
-          setJobsList(data.jobs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
+          setJobsList(
+            data.jobs.sort(
+              (a, b) => new Date(b.created_at) - new Date(a.created_at)
+            )
+          );
         }
       })
       .catch(() => setNoJobs(true))
@@ -37,9 +41,11 @@ function PreviousJobs() {
 
   if (noJobs) {
     return (
-      <div className="mt-8">
-        <h2 className="text-2xl font-bold">Previous Jobs:</h2>
-        <p className="text-gray-300">No jobs available.</p>
+      <div className="bg-red-800 border border-red-500 text-red-200 px-6 py-4 rounded-md text-center mx-4 mt-6">
+        <strong className="text-xl block font-bold">Oops!</strong>
+        <span className="text-sm">
+          No jobs found for the given criteria. Please try again.
+        </span>
       </div>
     );
   }
@@ -54,11 +60,31 @@ function PreviousJobs() {
             className="border border-gray-700 p-6 cursor-pointer hover:bg-gray-700"
             onClick={() => handleSelectJob(job.job_id)}
           >
-            <h3 className="text-xl font-semibold text-green-400">Job ID: {job.job_id}</h3>
+            <h3 className="text-xl font-semibold text-green-400">
+              Job ID: {job.job_id}
+            </h3>
             <p className="text-sm text-gray-400">Status: {job.status}</p>
-            <p className="text-sm text-gray-400">Created At: {job.created_at ? new Date(job.created_at).toLocaleString() : "N/A"}</p>
-            <p className="text-sm text-gray-400">Completed At: {job.completed_at ? new Date(job.completed_at).toLocaleString(): "N/A"}</p>
-            <p className="text-sm text-gray-400">Took: {job.completed_at && job.created_at ? formatDistance(new Date(job.created_at), new Date(job.completed_at)) : "N/A"}</p>
+            <p className="text-sm text-gray-400">
+              Created At:{" "}
+              {job.created_at
+                ? new Date(job.created_at).toLocaleString()
+                : "N/A"}
+            </p>
+            <p className="text-sm text-gray-400">
+              Completed At:{" "}
+              {job.completed_at
+                ? new Date(job.completed_at).toLocaleString()
+                : "N/A"}
+            </p>
+            <p className="text-sm text-gray-400">
+              Took:{" "}
+              {job.completed_at && job.created_at
+                ? formatDistance(
+                    new Date(job.created_at),
+                    new Date(job.completed_at)
+                  )
+                : "N/A"}
+            </p>
           </div>
         ))}
       </div>

@@ -125,7 +125,7 @@ function JobForm() {
 
         <button
           onClick={handleScrapeJob}
-          className="w-full p-4 mt-6 text-black bg-green-500 hover:bg-green-600 font-mono"
+          className="w-full p-4 mt-6 text-black bg-green-500 hover:bg-green-600 font-mono font-bold"
         >
           Start Scraping
         </button>
