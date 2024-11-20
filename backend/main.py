@@ -1,6 +1,7 @@
 import json
 import os
 import uuid
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Query, BackgroundTasks
 from fastapi.responses import JSONResponse
 from playwright.async_api import async_playwright, Page
@@ -16,6 +17,13 @@ JOB_DATA_FILE = 'JobData.json'
 SCREENSHOT_DIR = './screenshots/'
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def load_cookies():
     with open(COOKIES_FILE, 'r') as f:
