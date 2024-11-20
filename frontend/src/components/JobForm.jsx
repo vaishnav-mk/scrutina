@@ -20,7 +20,8 @@ function JobForm() {
     const newErrors = {};
     if (!location.trim()) newErrors.location = "Location is required.";
     if (!role.trim()) newErrors.role = "Role is required.";
-    if (scroll <= 0) newErrors.scroll = "Scroll count must be greater than zero.";
+    if (scroll <= 0)
+      newErrors.scroll = "Scroll count must be greater than zero.";
     return newErrors;
   };
 
@@ -30,27 +31,41 @@ function JobForm() {
       setErrors(formErrors);
       return;
     }
-
+  
     try {
-      const response = await axios.get("http://localhost:8000/scrape", {
-        params: { location, role, scroll },
-      });
-
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/scrape`,
+        { location, role, scroll },
+        {
+          params: { location, role, scroll },
+        }
+      );
+  
       const newJobId = response.data.job_id;
       setStatus("Job started. Waiting for completion...");
-
+  
       navigate(`/results/${newJobId}`);
     } catch (error) {
       console.error("Error starting the scraping job:", error);
       setStatus("Error starting the scraping job.");
     }
-
+  
     const newJobDetail = { location, role, scroll };
-    const updatedJobs = [newJobDetail, ...savedJobs];
-    localStorage.setItem("jobDetails", JSON.stringify(updatedJobs));
-    setSavedJobs(updatedJobs);
+  
+    const jobExists = savedJobs.some(
+      (job) =>
+        job.location === newJobDetail.location &&
+        job.role === newJobDetail.role &&
+        job.scroll === newJobDetail.scroll
+    );
+  
+    if (!jobExists) {
+      const updatedJobs = [newJobDetail, ...savedJobs];
+      localStorage.setItem("jobDetails", JSON.stringify(updatedJobs));
+      setSavedJobs(updatedJobs);
+    }
   };
-
+  
   const handleClickSavedJob = (jobDetail) => {
     setLocation(jobDetail.location);
     setRole(jobDetail.role);
@@ -115,14 +130,16 @@ function JobForm() {
           Start Scraping
         </button>
 
-        {status && (
-          <p className="text-center mt-4 text-yellow-400">{status}</p>
-        )}
+        {status && <p className="text-center mt-4 text-yellow-400">{status}</p>}
 
         {savedJobs.length > 0 && (
           <div className="mt-8">
-            <h3 className="text-2xl font-mono text-green-400">Saved Job Details</h3>
-            <p className="text-sm text-gray-400 mb-4">Click on a job to prefill the form.</p>
+            <h3 className="text-2xl font-mono text-green-400">
+              Saved Job Details
+            </h3>
+            <p className="text-sm text-gray-400 mb-4">
+              Click on a job to prefill the form.
+            </p>
             <ul className="space-y-4">
               {savedJobs.map((jobDetail, index) => (
                 <li
@@ -130,7 +147,10 @@ function JobForm() {
                   className="flex justify-between items-center cursor-pointer text-green-300 hover:text-green-500 font-mono"
                   onClick={() => handleClickSavedJob(jobDetail)}
                 >
-                  <span>{jobDetail.location} - {jobDetail.role} - {jobDetail.scroll} scrolls</span>
+                  <span>
+                    {jobDetail.location} - {jobDetail.role} - {jobDetail.scroll}{" "}
+                    scrolls
+                  </span>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
